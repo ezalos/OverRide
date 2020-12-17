@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
+#include <inttypes.h>
 
 
 int	main(void)
@@ -22,9 +23,9 @@ int	main(void)
 	char	buff_pass[0xc];
 
 
-	memset(buf_user, 0, 0xc);
-	memset(buf_read, 0, 0x5);
-	memset(buf_pass, 0, 0xc);
+	memset(buff_user, 0, 0xc);
+	memset(buff_read, 0, 0x5);
+	memset(buff_pass, 0, 0xc);
 	fd = fopen("/home/users/level03/.pass", "r");
 	if (fd == 0)
 	{
@@ -41,12 +42,12 @@ int	main(void)
 		puts("\\***************************************/");
 		printf("--[ Username: ");
 		fgets(buff_user, 0x64, stdin);
-		*strcspn(buff_user, "\n") = '\0';
+		buff_user[strcspn(buff_user, "\n")] = '\0';
 		printf("--[ Password: ");
 		fgets(buff_pass, 0x64, stdin);
-		*strcspn(buff_pass, "\n") = '\0';
+		buff_pass[strcspn(buff_pass, "\n")] = '\0';
 		puts("*****************************************");
-		if (0 == strncmp(buff_read, buff_pass))
+		if (0 == strncmp(buff_read, buff_pass, 0x29))
 		{
 			printf("Greetings, %s!\n", buff_user);
 			system("/bin/sh");
