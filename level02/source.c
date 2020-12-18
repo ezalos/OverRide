@@ -2,38 +2,34 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <inttypes.h>
 
 
 int	main(void)
 {
+	//   [rbp-0x110]
+	char	buff_pass[0x70];
+	//   [rbp-0xa0]
+	char	buff_read[0x30];
+	//   [rbp-0x70]
+	char	buff_user[0x64];
+	//	 [rbp-0xc]
+	int32_t	bytes_read;
 	//	 [rbp-0x8]
 	FILE	*fd;
 
-	//	 [rbp-0xc]
-	int32_t	bytes_read;
-
-	//   [rbp-0x70]
-	char	buff_user[0xc];
-
-	//   [rbp-0xa0]
-	char	buff_read[0x5];
-
-	//   [rbp-0x110]
-	char	buff_pass[0xc];
-
-
-	memset(buff_user, 0, 0xc);
-	memset(buff_read, 0, 0x5);
-	memset(buff_pass, 0, 0xc);
+	memset(buff_user, 0, 0xc * 4);
+	memset(buff_read, 0, 0x5 * 4);
+	memset(buff_pass, 0, 0xc * 4);
 	fd = fopen("/home/users/level03/.pass", "r");
 	if (fd == 0)
 	{
 		fwrite("ERROR: failed to open password file\n", 0x24, 0x1, stderr);
 		exit(1);
 	}
-	bytes_read =fread(buff_read, 0x29, 0x1, fd);
-	if (buff_read + bytes_read == strcspn(buff_read, "\n"))
+	bytes_read = fread(buff_read, 0x29, 0x1, fd);
+	if (bytes_read == strcspn(buff_read, "\n"))
 	{
 		fclose(fd);
 		puts("===== [ Secure Access System v1.0 ] =====");
