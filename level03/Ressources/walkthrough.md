@@ -1,8 +1,8 @@
-# Level3
+# Level03
 
 ## Solution
 
-* There is one file in our home, ```level3```, belonging to ```level4``` user, with suid.
+* There is one file in our home, ```level03```, belonging to ```level04``` user, with suid.
 * Here's the hand-decompiled source code we propose for this binary: [source.c](source.c)
 
 * For the sake of clarity, we won't display the very long disassembled code, but we will describe its behaviour:

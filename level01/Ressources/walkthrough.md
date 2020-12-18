@@ -2,7 +2,7 @@
 
 ## Solution
 
-* There is one file in our home, ```level1```, belonging to ```level2``` user, with suid.
+* There is one file in our home, ```level01```, belonging to ```level02``` user, with suid.
 * Here's the hand-decompiled source code we propose for this binary: [source.c](source.c)
 
 * For the sake of clarity, we won't display the very long disassembled code, but we will describe its behaviour:

