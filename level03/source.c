@@ -1,3 +1,5 @@
+// gcc -m32 -o source source.c
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
