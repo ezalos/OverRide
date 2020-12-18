@@ -2,6 +2,8 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <inttypes.h>
 
 #define STARS "***********************************"
 
@@ -12,8 +14,8 @@ int	main(void)
 	puts(STARS);
 	puts("* \t     -Level00 -\t\t  *");
 	puts(STARS);
-	printf("Password:")
-	nb = scanf("%d")
+	printf("Password:");
+	scanf("%d", &nb);
 	if (nb == 0x1a7)//5276
 	{
 		puts("\nAuthenticated!");

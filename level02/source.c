@@ -9,7 +9,7 @@
 int	main(void)
 {
 	//   [rbp-0x110]
-	char	buff_pass[0x70];
+	char	buff_pass[0x64];
 	//   [rbp-0xa0]
 	char	buff_read[0x30];
 	//   [rbp-0x70]
@@ -19,9 +19,9 @@ int	main(void)
 	//	 [rbp-0x8]
 	FILE	*fd;
 
-	memset(buff_user, 0, 0xc * 4);
-	memset(buff_read, 0, 0x5 * 4);
-	memset(buff_pass, 0, 0xc * 4);
+	memset(buff_user, 0, 0xc * 8);
+	memset(buff_read, 0, 0x5 * 8);
+	memset(buff_pass, 0, 0xc * 8);
 	fd = fopen("/home/users/level03/.pass", "r");
 	if (fd == 0)
 	{
@@ -66,3 +66,4 @@ int	main(void)
 
 
 }
+
