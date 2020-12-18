@@ -18,6 +18,7 @@ void	decrypt(int key)
 	while (i < len)
 	{
 		buf[i] = (char)(key ^ (int)(buf[i]));
+		i++;
 	}
 	if (!(strncmp(buf, "Congratulations!", 0x11)))
 		system("/bin/sh");
