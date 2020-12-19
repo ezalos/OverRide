@@ -6,7 +6,7 @@
 int		auth(char *login, unsigned int serial) //login = [ebp+0x8] [ebp + 0xc]
 {
 	size_t	len; //[ebp-0xc]
-	int		transfo; //[ebp-0x10]
+	int		hash; //[ebp-0x10]
 	int		i; //[ebp-0x14]
 
 	login[strcspn(login, '\n')] = 0;
@@ -20,16 +20,16 @@ int		auth(char *login, unsigned int serial) //login = [ebp+0x8] [ebp + 0xc]
 		puts("\[32m'---------------------------'");
 		return (1);
 	}
-	transfo = (login[3] ^ 0x1337) + 0x5eeded;
+	hash = (login[3] ^ 0x1337) + 0x5eeded;
 	i = 0;
 	while (i < len)
 	{
 		if (login[i] <= 0x1f)
 			return (1);
-		transfo += (login[i] ^ transfo) * 0x88233b2b; //calcul tres complique (a revoir)
+		hash += ((login[i] ^ hash) * 0x88233b2b); //calcul en realite plus complique
 		i++;
 	}
-	if (serial == transfo)
+	if (serial == hash)
 		return (0);
 	return (1);
 }
