@@ -3,16 +3,17 @@
 #include <sys/types.h>
 #include <sys/ptrace.h>
 #include <string.h>
+#include <sys/wait.h>
 
 
 int	main(void)
 {
 	int		stat_loc; // [esp+0x1c]
 	char	buf[0x80]; //[esp+0x20]
+	int		status1; //[esp+0xa0]
+	int		status2; //[esp+0xa4]
+	int		ptrace_ret; //[esp+0xa8]
 	pid_t	pid; // [esp+0xac]
-	long	ptrace_ret; //[esp+0xa8]
-
-
 
 	pid = fork();
 	memset(buf, 0, 0x80);
@@ -30,24 +31,19 @@ int	main(void)
 		while (1)
 		{
 			wait(&stat_loc);
-			if (stat_loc & 0x7f != 0)
-			{
-				if ((((stat_loc & 0x7f) + 0x1) >> 1) > 0)
-				{
-					puts("child is exiting...");
-					return (0);
-				}
-				ptrace_ret = ptrace(PT_READ_U, pid, 0x2c, 0x0);
-				if (ptrace_ret != 0xb)
-					continue ;
-				puts("no exec() for you");
-				kill(pid, 0x9);
-			}
-			else
+			status1 = WIFEXITED(stat_loc);
+			status2 = WIFSIGNALED(stat_loc);
+			if (status1 || status2)
 			{
 				puts("child is exiting...");
 				return (0);
 			}
+			ptrace_ret = ptrace(PT_READ_U, pid, 0x2c, 0x0);
+			if (ptrace_ret != 0xb)
+				continue ;
+			puts("no exec() for you");
+			kill(pid, 0x9);
+			return (0);
 		}
 	}	
 }
