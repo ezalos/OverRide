@@ -21,7 +21,7 @@ int	main(void)
 	stat_loc = 0;
 	if (pid == 0)
 	{
-		prctl(0x1, 0x1);  // PR_SET_PDEATHSIG
+		prctl(0x1, 0x1); // PR_SET_PDEATHSIG with signal SIGHUP
 		ptrace(PT_TRACE_ME, 0, 0, 0);
 		puts("Give me some shellcode, k");
 		gets(buf);
@@ -45,5 +45,5 @@ int	main(void)
 			kill(pid, 0x9);
 			return (0);
 		}
-	}	
+	}
 }
