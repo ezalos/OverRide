@@ -5,32 +5,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 
 void	log_wrapper(FILE *fd, char *msg, char *file)
 {
 	//sub    rsp,0x130
-	//[rbp-0x130]
-	//rcx 1st scas
-	
-	//[rbp-0x128]
-	//rsi 1st scas
-	
-	//[rbp-0x120]
-	//rdx/rsi strcpy
-	
-	//[rbp-0x118]
-	//fprintf rdi
-	
 	//[rbp-0x110]
-	//rdx 1st scas
-	//rdi/rdx 2nd scas
-	char	res[0x110];
+	char	buf[0xfe];
 
-	strcpy(res, msg);
-	strlen(res);
-	snprintf(res, 0xfe - strlen(msg), file);
-	res[strcspn(res, "\n")] = 0;
-	fprintf(fd, "LOG: %s\n", res);
+	strcpy(buf, msg);
+	snprintf(buf + strlen(buf), 0xfe - strlen(buf), file);
+	buf[strcspn(buf, "\n")] = 0;
+	fprintf(fd, "LOG: %s\n", buf);
 }
 
 #define BACKUP_FILE		"./backups/.log"
@@ -50,6 +38,8 @@ int		main(int ac, char **av)
 	//	[rbp-0x70]
 	char		buf[0x64];
 
+	file_octet = -1;
+	fd_backup = -1;
 	if (ac != 2)// ac == [rbp-0x94]
 		printf("Usage: %s filename", av[0]);// av[0] == [rbp-0xa0]
 	if (0 == (fd_log = fopen(BACKUP_FILE, "w")))
@@ -66,20 +56,21 @@ int		main(int ac, char **av)
 		exit(0x1);
 	}
 	
-	strcpy(buf, BACKUP_DIR); //not in asm, but makes sense
+	strcpy(buf, BACKUP_DIR);
 	strncat(buf, av[1], 0x64 - strlen(buf));
 
-	if (0 == (fd_backup = open(buf, 0xc1, 0x1b0)))
+	if (0 > (fd_backup = open(buf, 0xc1, 0x1b0)))
 	{
 		printf("ERROR: Failed to open %s%s\n", BACKUP_DIR, av[1]);
 		exit(0x1);
-	}
-	do {
-		file_octet = fgetc(fd_user);
+weird_loop:
 		write(fd_backup, &file_octet, 1);
-	} while (file_octet != 0xff);
+	}
+		file_octet = fgetc(fd_user);
+	if (file_octet != -1)
+		goto weird_loop;
 
-	log_wrapper(fd_user, "Finished back up ", buf);
+	log_wrapper(fd_log, "Finished back up ", av[1]);
 	fclose(fd_user);
 	close(fd_backup);
 	return (0);
