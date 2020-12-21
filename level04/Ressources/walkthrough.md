@@ -10,7 +10,7 @@
 		* Child process will ask for a shellcode and then launch `gets()`
 		* Parent process does a couple of verifications
 			* `WIFEXITED()` and `WIFSIGNALED()` which does not impact us too much
-			* It then checks if the child process uses `execv()` with this :
+			* It then checks if the child process uses `execve()` with this :
 ```c
 ptrace_ret = ptrace(PT_READ_U, pid, 0x2c, 0x0);
 if (ptrace_ret != 0xb)
