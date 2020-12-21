@@ -42,7 +42,7 @@ int		main(int ac, char **av)
 	fd_backup = -1;
 	if (ac != 2)// ac == [rbp-0x94]
 		printf("Usage: %s filename", av[0]);// av[0] == [rbp-0xa0]
-	if (0 == (fd_log = fopen(BACKUP_FILE, "w")))
+	if (0 == (fd_log = fopen(BACKUP_FILE, "w")))//								./backups/.log
 	{
 		printf("ERROR: Failed to open %s\n", BACKUP_FILE);
 		exit(0x1);
@@ -50,7 +50,7 @@ int		main(int ac, char **av)
 
 	log_wrapper(fd_log, "Starting back up: ", av[1]);//av[1] == [rbp-0xa0+0x8]
 
-	if (0 == (fd_user = fopen(av[1],"r")))
+	if (0 == (fd_user = fopen(av[1],"r")))//									av[1]
 	{
 		printf("ERROR: Failed to open %s\n", av[1]);
 		exit(0x1);
@@ -59,7 +59,7 @@ int		main(int ac, char **av)
 	strcpy(buf, BACKUP_DIR);
 	strncat(buf, av[1], 0x64 - strlen(buf));
 
-	if (0 > (fd_backup = open(buf, 0xc1, 0x1b0)))
+	if (0 > (fd_backup = open(buf, 0xc1, 0x1b0)))//								./backups + av[1]
 	{
 		printf("ERROR: Failed to open %s%s\n", BACKUP_DIR, av[1]);
 		exit(0x1);
