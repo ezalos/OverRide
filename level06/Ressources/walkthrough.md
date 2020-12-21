@@ -10,7 +10,7 @@
 	* ```main()``` prompts the user for his login and gets it with ```fgets()```
 	* it then asks him for a number and gets it with ```scanf```
 	* it then calls ```auth()``` passing the login and the number in parameter
-	* if ```auth()``` returns ```0```, ```system("/bin/sh"``` is launched ; else the program returns
+	* if ```auth()``` returns ```0```, ```system("/bin/sh")``` is launched ; else the program returns
 
 	* ```auth``` first makes checks: 
 		* if ```login``` length is less or equal to ```0x5```, returns ```1```
