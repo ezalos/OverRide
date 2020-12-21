@@ -68,7 +68,7 @@ python -c "print(
  * We can now execute the vulnerability:
 
  ```sh
-cat /var/crash/level02_1st_arg /var/crash/level02_2n_arg - | ./level02
+cat /var/crash/level02_1st_arg /var/crash/level02_2nd_arg - | ./level02
 ...
 cd ../level03
 cat .pass

