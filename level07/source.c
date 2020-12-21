@@ -1,4 +1,4 @@
-//gcc -m32 -o source source.c
+//gcc -m32 -z execstack -o source source.c
 #include <stdio.h>
 #include <string.h>
 
@@ -66,11 +66,7 @@ int	main(int ac, char **av, char **env)
 
 	// args = av;
 	ret = 0;
-	((int*)(command))[0] = 0;
-	((int*)(command))[1] = 0;
-	((int*)(command))[2] = 0;
-	((int*)(command))[3] = 0;
-	((int*)(command))[4] = 0;
+	bzero(command, 0x14);
 
 	memset(buf, 0, 0x190);
 	while (*av)
@@ -111,10 +107,6 @@ int	main(int ac, char **av, char **env)
 			printf(" Failed to do %s command\n", command);
 		else
 			printf(" Completed %s command successfully\n", command);
-		((int*)(command))[0] = 0;
-		((int*)(command))[1] = 0;
-		((int*)(command))[2] = 0;
-		((int*)(command))[3] = 0;
-		((int*)(command))[4] = 0;	
+		bzero(command, 0x14);	
 	}
 }
