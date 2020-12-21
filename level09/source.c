@@ -20,7 +20,7 @@ void	secret_backdoor(void)
 
 void	set_username(t_data *data)
 {
-	//buf = [rbp-0x98]
+	//data = [rbp-0x98]
 
 	char	username[0x80]; //[rbp-0x90]
 	int		i;
@@ -40,7 +40,7 @@ void	set_username(t_data *data)
 
 void	set_msg(t_data *data)
 {
-	//buf = [rbp-0x408]
+	//data = [rbp-0x408]
 
 	char message[0x400];
 
